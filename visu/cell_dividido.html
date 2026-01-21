@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <title>Similar Song Network</title>
+  <link rel="stylesheet" href="layout.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@observablehq/inspector@5/dist/inspector.css">
+</head>
+<body>
+      <div class="dashboard">
+
+        <div class="column-left">
+            <div class="panel map">
+              <div id="observablehq-viewof-mapa-db5cc899"></div>
+            </div>
+            <div class="panel bars">
+              <div id="observablehq-viewof-barras-db5cc899"></div>
+            </div>
+        </div>
+
+        <div class="column-right">
+            <div class="panel sunburst">
+              <div id="observablehq-viewof-sunburst_sazonal-db5cc899"></div>
+            </div>
+            <div class="panel parallel">
+              <div id="observablehq-viewof-parallel_coordinates-db5cc899"></div>
+            </div>
+            <div class="panel lines">
+              <div id="observablehq-viewof-evolucao_anual_d3-db5cc899"></div>
+            </div>
+        </div>
+
+      </div>
+      
+      <p style="padding: 10px;">Credit: <a href="https://observablehq.com/d/ab87f5eea01ad34f">Projeto de Visualização de Dados by vinicius</a></p>
+
+      <div id="observablehq-uf-57fd6d7b"></div>
+      <div id="observablehq-viewof-configSazonalidade-57fd6d7b"></div>
+      <p>Credit: <a href="https://observablehq.com/d/ab87f5eea01ad34f">Projeto de Visualização de Dados by vinicius</a></p>
+
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@observablehq/inspector@5/dist/inspector.css">
+      <script type="module">
+      import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@5/dist/runtime.js";
+      import define from "https://api.observablehq.com/d/ab87f5eea01ad34f.js?v=4";
+      new Runtime().module(define, name => {
+        if (name === "uf") return new Inspector(document.querySelector("#observablehq-uf-57fd6d7b"));
+        if (name === "viewof configSazonalidade") return new Inspector(document.querySelector("#observablehq-viewof-configSazonalidade-57fd6d7b"));
+        return ["dados_tempo","viewof sunburst_sazonal","viewof evolucao_anual_d3","dados_pontos","viewof parallel_coordinates","viewof mapa"].includes(name);
+      });
+      </script>
+
+      <div id="observablehq-uf-57fd6d7b"></div>
+      <div id="observablehq-viewof-mapa-57fd6d7b"></div>
+      <p>Credit: <a href="https://observablehq.com/d/ab87f5eea01ad34f">Projeto de Visualização de Dados by vinicius</a></p>
+
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@observablehq/inspector@5/dist/inspector.css">
+      <script type="module">
+      import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@5/dist/runtime.js";
+      import define from "https://api.observablehq.com/d/ab87f5eea01ad34f.js?v=4";
+      new Runtime().module(define, name => {
+        if (name === "uf") return new Inspector(document.querySelector("#observablehq-uf-57fd6d7b"));
+        if (name === "viewof mapa") return new Inspector(document.querySelector("#observablehq-viewof-mapa-57fd6d7b"));
+      });
+      </script>
+
+      <div id="observablehq-uf-57fd6d7b"></div>
+      <div id="observablehq-viewof-barras-57fd6d7b"></div>
+      <p>Credit: <a href="https://observablehq.com/d/ab87f5eea01ad34f">Projeto de Visualização de Dados by vinicius</a></p>
+
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@observablehq/inspector@5/dist/inspector.css">
+      <script type="module">
+      import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@5/dist/runtime.js";
+      import define from "https://api.observablehq.com/d/ab87f5eea01ad34f.js?v=4";
+      new Runtime().module(define, name => {
+        if (name === "uf") return new Inspector(document.querySelector("#observablehq-uf-57fd6d7b"));
+        if (name === "viewof barras") return new Inspector(document.querySelector("#observablehq-viewof-barras-57fd6d7b"));
+      });
+      </script>
+
+      <div id="observablehq-uf-57fd6d7b"></div>
+      <div id="observablehq-viewof-sunburst_sazonal-57fd6d7b"></div>
+      <p>Credit: <a href="https://observablehq.com/d/ab87f5eea01ad34f">Projeto de Visualização de Dados by vinicius</a></p>
+
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@observablehq/inspector@5/dist/inspector.css">
+      <script type="module">
+      import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@5/dist/runtime.js";
+      import define from "https://api.observablehq.com/d/ab87f5eea01ad34f.js?v=4";
+      new Runtime().module(define, name => {
+        if (name === "uf") return new Inspector(document.querySelector("#observablehq-uf-57fd6d7b"));
+        if (name === "viewof sunburst_sazonal") return new Inspector(document.querySelector("#observablehq-viewof-sunburst_sazonal-57fd6d7b"));
+        return ["viewof parallel_coordinates"].includes(name);
+      });
+      </script>
+
+      <div id="observablehq-uf-57fd6d7b"></div>
+      <div id="observablehq-viewof-parallel_coordinates-57fd6d7b"></div>
+      <p>Credit: <a href="https://observablehq.com/d/ab87f5eea01ad34f">Projeto de Visualização de Dados by vinicius</a></p>
+
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@observablehq/inspector@5/dist/inspector.css">
+      <script type="module">
+      import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@5/dist/runtime.js";
+      import define from "https://api.observablehq.com/d/ab87f5eea01ad34f.js?v=4";
+      new Runtime().module(define, name => {
+        if (name === "uf") return new Inspector(document.querySelector("#observablehq-uf-57fd6d7b"));
+        if (name === "viewof parallel_coordinates") return new Inspector(document.querySelector("#observablehq-viewof-parallel_coordinates-57fd6d7b"));
+      });
+      </script>
+
+      <div id="observablehq-uf-57fd6d7b"></div>
+      <div id="observablehq-viewof-evolucao_anual_d3-57fd6d7b"></div>
+      <p>Credit: <a href="https://observablehq.com/d/ab87f5eea01ad34f">Projeto de Visualização de Dados by vinicius</a></p>
+
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@observablehq/inspector@5/dist/inspector.css">
+      <script type="module">
+      import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@5/dist/runtime.js";
+      import define from "https://api.observablehq.com/d/ab87f5eea01ad34f.js?v=4";
+      new Runtime().module(define, name => {
+        if (name === "uf") return new Inspector(document.querySelector("#observablehq-uf-57fd6d7b"));
+        if (name === "viewof evolucao_anual_d3") return new Inspector(document.querySelector("#observablehq-viewof-evolucao_anual_d3-57fd6d7b"));
+      });
+      </script>
+</body>
+</html>
