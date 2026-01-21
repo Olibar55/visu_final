@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <title>Similar Song Network</title>
+  
+  <link rel="stylesheet" href="layout.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@observablehq/inspector@5/dist/inspector.css">
+</head>
+<body>
+
+  <div class="dashboard">
+
+    <div class="column-left">
+        <div class="panel map">
+          <div id="inspector-mapa"></div> 
+        </div>
+        <div class="panel bars">
+          <div id="inspector-barras"></div>
+        </div>
+    </div>
+
+    <div class="column-right">
+        <div class="panel sunburst">
+          <div id="inspector-sunburst"></div>
+        </div>
+        <div class="panel parallel">
+          <div id="inspector-parallel"></div>
+        </div>
+        <div class="panel lines">
+          <div id="inspector-lines"></div>
+        </div>
+    </div>
+
+  </div>
+  
+  <p style="padding: 10px;">Credit: <a href="https://observablehq.com/d/ab87f5eea01ad34f">Projeto de Visualização de Dados by vinicius</a></p>
+
+  <script type="module">
+  import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@5/dist/runtime.js";
+  import define from "https://api.observablehq.com/d/ab87f5eea01ad34f.js?v=4";
+
+  new Runtime().module(define, name => {
+    
+    if (name === "viewof mapa") return new Inspector(document.querySelector("#inspector-mapa"));
+    if (name === "viewof barras") return new Inspector(document.querySelector("#inspector-barras"));
+    if (name === "viewof sunburst_sazonal") return new Inspector(document.querySelector("#inspector-sunburst"));
+    if (name === "viewof parallel_coordinates") return new Inspector(document.querySelector("#inspector-parallel"));
+    if (name === "viewof evolucao_anual_d3") return new Inspector(document.querySelector("#inspector-lines"));
+
+    return ["dados_tempo","dados_pontos"].includes(name);
+  });
+  </script>
+
+</body>
+</html>
