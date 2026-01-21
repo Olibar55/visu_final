@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <title>Analise de queimada no Brasil</title>
+  <link rel="stylesheet" href="layout.css">
+</head>
+<body>
+      <div class="dashboard">
+
+        <div class="column-left">
+            <div class="panel map">
+              <div id="observablehq-viewof-mapa-db5cc899"></div>
+            </div>
+            <div class="panel bars">
+              <div id="observablehq-viewof-barras-db5cc899"></div>
+            </div>
+        </div>
+
+        <div class="column-right">
+            <div class="panel sunburst">
+              <div id="observablehq-viewof-sunburst_sazonal-db5cc899"></div>
+            </div>
+            <div class="panel parallel">
+              <div id="observablehq-viewof-parallel_coordinates-db5cc899"></div>
+            </div>
+            <div class="panel lines">
+              <div id="observablehq-viewof-evolucao_anual_d3-db5cc899"></div>
+            </div>
+        </div>
+
+      </div>
+      
+      <p style="padding: 10px;">Credit: <a href="https://observablehq.com/d/ab87f5eea01ad34f">Projeto de Visualização de Dados by vinicius</a></p>
+
+      <script type="module">
+      import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@5/dist/runtime.js";
+      import define from "https://api.observablehq.com/d/ab87f5eea01ad34f.js?v=4";
+      new Runtime().module(define, name => {
+        if (name === "viewof configSazonalidade") return new Inspector(document.querySelector("#observablehq-viewof-configSazonalidade-db5cc899"));
+        if (name === "viewof mapa") return new Inspector(document.querySelector("#observablehq-viewof-mapa-db5cc899"));
+        if (name === "viewof barras") return new Inspector(document.querySelector("#observablehq-viewof-barras-db5cc899"));
+        if (name === "viewof sunburst_sazonal") return new Inspector(document.querySelector("#observablehq-viewof-sunburst_sazonal-db5cc899"));
+        if (name === "viewof parallel_coordinates") return new Inspector(document.querySelector("#observablehq-viewof-parallel_coordinates-db5cc899"));
+        if (name === "viewof evolucao_anual_d3") return new Inspector(document.querySelector("#observablehq-viewof-evolucao_anual_d3-db5cc899"));
+        return ["dados_tempo","dados_pontos"].includes(name);
+      });
+      </script>
+</body>
+</html>
