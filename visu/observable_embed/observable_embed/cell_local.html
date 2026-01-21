@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <title>Similar Song Network</title>
+  <link rel="stylesheet" type="text/css" href="./inspector.css">
+</head>
+<body>
+    <h1>Similar Song Network</h1>
+    <p>Songs similar to one another according to <a href="http://www.last.fm/api">last.fm</a> are linked together. Song nodes are sized based on playcounts, and colored by artist.</p>
+    <p>Data from <a href="http://www.last.fm/api/show/track.getSimilar">last.fm</a>. Some songs include additional links for effect.<br>Popular songs are defined as those with playcounts above the median for all songs in network. This example is a simpler version of the <a href="http://flowingdata.com/2012/08/02/how-to-make-an-interactive-network-visualization/">tutorial</a> by <a href="http://vallandingham.me/">Jim Vallandingham</a>.</p>
+    
+    <div id="chart"> </div>
+      <script type="module">
+
+      import define from "./index.js";
+      import {Runtime, Library, Inspector} from "./runtime.js";
+
+      const runtime = new Runtime();
+      const main = runtime.module(define, name => {
+        if (name === "viewof chart") {
+          return new Inspector(document.getElementById("chart"));
+        }
+      });
+
+      </script>
+</body>

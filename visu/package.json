@@ -1,0 +1,14 @@
+{
+  "name": "ab87f5eea01ad34f",
+  "main": "ab87f5eea01ad34f@597.js",
+  "version": "597.0.0",
+  "homepage": "https://observablehq.com/d/ab87f5eea01ad34f",
+  "author": {
+    "name": "vinicius",
+    "url": "https://observablehq.com/@vinicius4"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4 - 5"
+  }
+}

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Similar Song Network</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    
+</head>
+  <body>
+    <main>
+      <div class="container mt-4"> 
+        <h1>Similar Song Network</h1>
+        <p>
+          This notebook uses simulated forces with <a href="https://d3js.org/d3-force">d3-force</a>, based on <a href="https://observablehq.com/@d3/force-directed-graph/2?intent=fork">Force-directed graph</a> example.
+        </p>
+        <p>
+          Songs similar to one another according to <a href="http://www.last.fm/api/show/track.getSimilar">last.fm</a> are linked together. Song nodes are sized based on playcounts, and colored by artist.
+        </p>
+        <p>
+          Data from <a href="http://www.last.fm/api/show/track.getSimilar">last.fm</a>. Some songs include additional links for effect.<br>
+          Popular songs are defined as those with playcounts above the median for all songs in network. This example is a simpler version of the <a href="http://flowingdata.com/2012/08/02/how-to-make-an-interactive-network-visualization/">tutorial</a> by <a href="http://vallandingham.me/">Jim Vallandingham</a>.
+        </p>
+        <p> Selected Song: <b><span id="song_text"> </span></b></p>
+        <div id="network"></div>
+      </div>
+    </main>
+    <script type="module">
+      import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+
+      // Specify the dimensions of the chart.
+      const width = 928;
+      const height = 800;
+
+      // Specify the color scale.
+      const color = d3.scaleOrdinal(d3.schemeCategory10);
+
+      let selectedNode = null;
+
+      let data = d3.json("https://gist.githubusercontent.com/emanueles/7b7723386677bb13763208216fd89c1f/raw/d09478158ba0fe8aa616deee8bcfe908bba17f15/songs.json").then(data => {
+        show_vis(data, callback => {
+          // Callback function to handle node selection changes
+          if (selectedNode) {
+            document.getElementById("song_text").innerText = `${selectedNode.artist}: ${selectedNode.name}`;
+          } else {
+            document.getElementById("song_text").innerText = "No song selected";
+          }
+        });
+      });
+      
+      function show_vis(data, callback) {
+        // The force simulation mutates links and nodes, so create a copy
+      // so that re-evaluating this cell produces the same result.
+
+      const nodeStroke = '#fff';
+      const nodeStrokeWidth = '1.5';
+      const nodeStrokeOpacity = 1;
+      const linkOpacity = 0.6;
+      const nodeDeselectOpacity = 0.4;
+      const linkDeselectOpacity = 0.2;
+      const nodeHighlightStroke = "#ffd700";
+      const nodeHighlightStrokeWidth = 2.0;
+      const links = data.links.map(d => ({...d}));
+      const nodes = data.nodes.map(d => ({...d}));
+
+      const compute_radius = d3.scaleSqrt()
+        .range([2, 20])
+        .domain(d3.extent(nodes, d => d.playcount));
+
+      // Construct the forces
+      const nodeDistanceMax = 270;
+      const nodeStrength = -50;
+      const linkDistance = 50;
+      const forceNode = d3.forceManyBody();
+      const forceLink = d3.forceLink(links).id(d => d.id);
+      forceNode.strength(nodeStrength);
+      forceNode.distanceMax(nodeDistanceMax);
+      forceLink.distance(linkDistance);
+      
+      // Create a simulation with several forces.
+      const simulation = d3.forceSimulation(nodes)
+          .force("link", forceLink)
+          .force("charge", forceNode)
+          .force("center", d3.forceCenter(width / 2, height / 2))
+          .on("tick", ticked);
+
+      // Create the SVG container.
+      const svg = d3.create("svg")
+          .attr("width", width)
+          .attr("height", height)
+          .attr("viewBox", [0, 0, width, height])
+          .attr("style", "max-width: 100%; height: auto;");
+
+      svg.on('click', deselect_node);
+
+      // Add a line for each link, and a circle for each node.
+      const link = svg.append("g")
+          .attr("stroke", "#999")
+          .attr("stroke-opacity", 0.6)
+        .selectAll()
+        .data(links)
+        .join("line")
+          .attr("stroke-width", d => Math.sqrt(d.value));
+
+      const node = svg.append("g")
+          .attr("stroke", "#fff")
+          .attr("stroke-width", 1.5)
+        .selectAll()
+        .data(nodes)
+        .join("circle")
+          .attr("r", d => compute_radius(d.playcount))
+          .attr("fill", d => color(d.group))
+          .on('click', clicked)
+
+      node.append("title")
+          .text(d => `${d.artist}: ${d.name}`);
+
+      // Add a drag behavior.
+      node.call(d3.drag()
+            .on("start", dragstarted)
+            .on("drag", dragged)
+            .on("end", dragended));
+
+      // Set the position attributes of links and nodes each time the simulation ticks.
+      function ticked() {
+        link
+            .attr("x1", d => d.source.x)
+            .attr("y1", d => d.source.y)
+            .attr("x2", d => d.target.x)
+            .attr("y2", d => d.target.y);
+
+        node
+            .attr("cx", d => d.x)
+            .attr("cy", d => d.y);
+      }
+
+      // Reheat the simulation when drag starts, and fix the subject position.
+      function dragstarted(event) {
+        if (!event.active) simulation.alphaTarget(0.3).restart();
+        event.subject.fx = event.subject.x;
+        event.subject.fy = event.subject.y;
+      }
+
+      // Update the subject (dragged node) position during drag.
+      function dragged(event) {
+        event.subject.fx = event.x;
+        event.subject.fy = event.y;
+      }
+
+      // Restore the target alpha so the simulation cools after dragging ends.
+      // Unfix the subject position now that it’s no longer being dragged.
+      function dragended(event) {
+        if (!event.active) simulation.alphaTarget(0);
+        event.subject.fx = null;
+        event.subject.fy = null;
+      }
+
+      function clicked(event, d) {
+    // evitando que o evento clique do svg seja disparado
+    event.stopPropagation();
+    
+    //1. Configurar todos os nós e arestas com o visual semi-transparente
+    const allNodes = svg.selectAll('circle')
+      .attr("stroke", nodeStroke)
+      .attr("stroke-width", nodeStrokeWidth)
+      .attr("stroke-opacity", nodeDeselectOpacity)
+      .attr('fill-opacity', nodeDeselectOpacity);
+
+    const allLinks = svg.selectAll('line')
+      .attr("stroke-opacity", linkDeselectOpacity);
+    
+    //2. Seleciona o nó atual, alterando a cor da borda com opacidade máxima
+    const currentNode = d3.select(this)
+        .attr("stroke", nodeHighlightStroke)
+        .attr("stroke-width", nodeHighlightStrokeWidth)
+        .attr("stroke-opacity", nodeStrokeOpacity)
+        .attr('fill-opacity', nodeStrokeOpacity);    
+    
+    selectedNode = d;
+    callback(); // Chama o callback para atualizar o texto do nó selecionado
+  }
+
+  function deselect_node(event) {
+    // 1. Voltar todos os nós e arestas para a configuração padrão
+    const allNodes = svg.selectAll('circle')
+      .attr("stroke", nodeStroke)
+      .attr("stroke-width", nodeStrokeWidth)
+      .attr("stroke-opacity", nodeStrokeOpacity)
+      .attr('fill-opacity', nodeStrokeOpacity);
+
+    const allLinks = svg.selectAll('line')
+      .attr("stroke-opacity", 0.6);
+
+    selectedNode = null;
+    callback(); // Chama o callback para atualizar o texto do nó selecionado
+  }
+      
+      d3.select("#network").node().append(svg.node());
+      }
+    </script>
+  </body>

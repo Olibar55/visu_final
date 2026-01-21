@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Taxa de desemprego nos EUA em 2008</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite-api@5.6.0"></script>
+    <!-- Import vega-embed -->
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@7"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  </head>
+  <body>
+    <main>
+      <div class="container mt-4"> 
+        <h1>Taxa de desemprego nos EUA em 2008</h1>
+        <div id="map"></div>
+      </div>
+    </main>
+    <script>
+      // setup API options
+      const options = {
+        config: {
+          // Vega-Lite default configuration
+        },
+        view: {
+          // view constructor options
+          // remove the loader if you don't want to default to vega-datasets!
+          loader: vega.loader({
+            baseURL: "https://cdn.jsdelivr.net/npm/vega-datasets@2/",
+          }),
+          renderer: "canvas",
+        },
+      };
+
+      // register vega and vega-lite with the API
+      vl.register(vega, vegaLite, options);
+
+      // now you can use the API!
+      
+      let usa = 'https://vega.github.io/vega-datasets/data/us-10m.json';
+      let unemployment = 'https://vega.github.io/vega-datasets/data/unemployment.tsv';
+
+      choromap = vl.markGeoshape({stroke: '#aaa', strokeWidth: 0.25, tooltip: true})
+      .data(vl.topojson(usa).feature('counties'))
+    .transform(
+        vl.lookup('id').from(vl.data(unemployment).key('id').fields('rate'))
+      )
+      .encode(
+        vl.color().fieldQ('rate').scale({domain: [0.01, 0.19], type: 'quantize', clamp: true, scheme: {name: 'yellowgreenblue', count: 9}}).legend({format: '%', title: 'Taxa'}),
+        vl.tooltip().fieldQ('rate').format('.0%')
+      )
+      .project(vl.projection('albersUsa'))
+      .width(890).height(500);
+
+      const chartSpec = choromap.toSpec();
+
+      vegaEmbed('#map', chartSpec, options)
+        .then(result => {
+          // Access the Vega view instance
+        })
+        .catch(console.error);
+    </script>
+
+  </body>
