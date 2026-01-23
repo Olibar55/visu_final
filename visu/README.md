@@ -1,33 +1,9 @@
 # Projeto de Visualização de Dados
 
-https://observablehq.com/d/ab87f5eea01ad34f@597
+O projeto avançou conforme o planejado até a etapa final, quando surgiram dificuldades técnicas na criação do site. Consegui elaborar as visualizações via Observable HQ e integrar filtros entre elas com sucesso. Embora existam outras funcionalidades que eu gostaria de adicionar, o que foi implementado é suficiente para responder às perguntas de partida. No entanto, como minha intenção era inserir os textos explicativos exclusivamente no site, acabei não os incluindo no notebook nem no material da apresentação, pois imaginei que a explicação oral seria suficiente e não me atentei a essas outras alternativas.
 
-View this notebook in your browser by running a web server in this folder. For
-example:
+Não anexei o material antes porque não sabia exatamente o que deveria fazer, já que não tinha o site. Meu maior erro foi insistir no Observable Framework após várias falhas consecutivas, eu deveria ter tentado outra abordagem logo no início dos problemas. 
 
-~~~sh
-npx http-server
-~~~
+Embora tenha finalizado as visualizações cedo e buscado soluções exaustivamente, não consegui fazer o framework funcionar como planejado. Confesso que tentei muito fazer o deploy antes da apresentação  (o que explica as diversas tentativas no histórico) mas sem sucesso. É frustrante não entregar o projeto como planejei após ter conseguido produzir bastante, mas pretendo continuar o desenvolvimento e mostrá-lo à senhora futuramente.
 
-Or, use the [Observable Runtime](https://github.com/observablehq/runtime) to
-import this module directly into your application. To npm install:
-
-~~~sh
-npm install @observablehq/runtime@5
-npm install https://api.observablehq.com/d/ab87f5eea01ad34f@597.tgz?v=3
-~~~
-
-Then, import your notebook and the runtime as:
-
-~~~js
-import {Runtime, Inspector} from "@observablehq/runtime";
-import define from "ab87f5eea01ad34f";
-~~~
-
-To log the value of the cell named “foo”:
-
-~~~js
-const runtime = new Runtime();
-const main = runtime.module(define);
-main.value("foo").then(value => console.log(value));
-~~~
+O código enviado não irá rodar, servindo mais para ilustrar as versões finais minhas tentativas. Enviei dois arquivos cell.html: um com a estrutura de scripts do Observable HQ unificada e outro com ela dividida para que a senhora possa entender as duas principais formas como tentei organizar o cell.html. Também tentei ajustar o CSS através do arquivo layout.css, mas não obtive o resultado esperado. Como não tinha experiência prévia com desenvolvimento web, não houve tempo hábil para superar todos os obstáculos técnicos, mas pretendo preencher essa lacuna em breve.
